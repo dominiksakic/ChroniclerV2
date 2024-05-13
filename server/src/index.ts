@@ -1,15 +1,25 @@
-const dotenv = require("dotenv");
-import { connectToDatabase } from "./db";
 import express, { Express, Request, Response } from "express";
+import { getUsernameController } from "./user/controller";
+import { getDiariesController } from "./diary/controller";
+import cors from "cors";
+const dotenv = require("dotenv");
 
 dotenv.config();
 
 const app: Express = express();
 const port = process.env.PORT || 3000;
 
-app.get("/", async (req: Request, res: Response) => {
-  res.send("Cool server!");
+//MIDLEWARE
+app.use(cors());
+app.use(express.json());
+
+//TEST ENDPOINT
+app.get("/", (req: Request, res: Response) => {
+  res.send("Chronicler V2!");
 });
+
+//DIARY
+app.get("/diaries", getDiariesController);
 
 //to run TS without compiling it before: npx ts-node src/index.ts
 app.listen(port, () => {
