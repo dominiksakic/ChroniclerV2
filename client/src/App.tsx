@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 
+const BASE_URL: string = import.meta.env.VITE_BASE_URL;
+
 function App() {
   const [user, setUser] = useState<string>(" ");
 
@@ -10,10 +12,11 @@ function App() {
 
   //handler
   async function handleUserFetch() {
-    const response = await fetch("http://localhost:3000/diaries");
+    const response = await fetch(`${BASE_URL}/users`);
     const data = await response.json();
+    const userName: string = data.username;
 
-    setUser(data);
+    setUser(userName);
   }
 
   return (

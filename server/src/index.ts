@@ -1,5 +1,5 @@
-import { connectToDatabase } from "./db";
 import express, { Express, Request, Response } from "express";
+import { getUsernameController } from "./user/controller";
 import cors from "cors";
 const dotenv = require("dotenv");
 
@@ -18,9 +18,7 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 //Diaries
-app.get("/diaries", (req: Request, res: Response) => {
-  res.json("Dominik");
-});
+app.get("/users", getUsernameController);
 
 //to run TS without compiling it before: npx ts-node src/index.ts
 app.listen(port, () => {
