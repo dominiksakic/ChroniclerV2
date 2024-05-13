@@ -1,5 +1,6 @@
 import express, { Express, Request, Response } from "express";
 import { getUsernameController } from "./user/controller";
+import { getDiariesController } from "./diary/controller";
 import cors from "cors";
 const dotenv = require("dotenv");
 
@@ -17,8 +18,8 @@ app.get("/", (req: Request, res: Response) => {
   res.send("Chronicler V2!");
 });
 
-//Diaries
-app.get("/users", getUsernameController);
+//DIARY
+app.get("/diaries", getDiariesController);
 
 //to run TS without compiling it before: npx ts-node src/index.ts
 app.listen(port, () => {
