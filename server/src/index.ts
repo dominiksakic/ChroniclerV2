@@ -1,7 +1,7 @@
 import express, { Express, Request, Response } from "express";
 import { getUsernameController } from "./user/controller";
 import { getDiariesController } from "./diary/controller";
-import cors from "cors";
+const cors = require("cors");
 const dotenv = require("dotenv");
 
 dotenv.config();
