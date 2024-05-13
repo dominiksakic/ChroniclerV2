@@ -14,7 +14,6 @@ interface DiaryEntry {
 }
 
 function App() {
-  const [user, setUser] = useState<string>(" ");
   const [entries, setEntries] = useState<DiaryEntry[]>([]);
 
   useEffect(() => {
@@ -30,7 +29,7 @@ function App() {
 
   return (
     <>
-      <h2>{user}'s, Chronicler</h2>
+      <h2>'s', Chronicler</h2>
       {entries.map((entry, index) => {
         return <Card key={index} entry={entry} />;
       })}
