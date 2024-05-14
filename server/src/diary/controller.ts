@@ -57,6 +57,7 @@ export async function deleteDiariesController(
     res.status(500).json({ error: "Error deleting entry" });
   }
 }
+
 export async function patchDiariesController(
   req: Request,
   res: Response
