@@ -1,10 +1,91 @@
 import { connectToDatabase } from "../db";
+import { ObjectId } from "mongodb";
 
-export async function getEntries(): Promise<string> {
+interface EntryUpdateRequest {
+  title?: string;
+  content?: string;
+}
+
+export async function getEntries(email: string): Promise<string> {
   const db = await connectToDatabase();
   const user = await db
-    .collection("user")
-    .findOne({ user_email: "dominik.sakic@yahoo.com" }, { entires: 1 }); //change the user_email to a unique identifier
+    .collection("users")
+    .findOne({ email: email }, { entries: 1 });
+  console.log(user);
+  return user?.entries || [];
+}
+
+export async function postEntry(
+  newEntry: Object,
+  email: string
+): Promise<string> {
+  const db = await connectToDatabase();
+  const user = await db
+    .collection("users")
+    .findOneAndUpdate(
+      { email: email },
+      { $push: { entries: newEntry } },
+      { returnDocument: "after" }
+    );
 
   return user?.entries || [];
+}
+
+export async function deleteEntry(
+  entryToDelete: string,
+  email: string
+): Promise<string> {
+  const db = await connectToDatabase();
+  const deletedEntry = await db
+    .collection("users")
+    .findOneAndUpdate(
+      { email: email },
+      { $pull: { entries: { _id: new ObjectId(entryToDelete) } } },
+      { returnDocument: "after" }
+    );
+
+  return deletedEntry || "not found";
+}
+export async function updateEntry(
+  userId: string,
+  entryToUpdate: string,
+  updates: EntryUpdateRequest
+): Promise<any> {
+  const db = await connectToDatabase();
+  const user = await db.collection("users").findOne(
+    {
+      _id: new ObjectId(userId),
+      "entries._id": new ObjectId(entryToUpdate),
+    },
+    {
+      projection: {
+        "entries.$": 1,
+      },
+    }
+  );
+
+  const updatedEntry = {
+    title: updates.title !== undefined ? updates.title : user.entries[0].title,
+    content:
+      updates.content !== undefined ? updates.content : user.entries[0].content,
+    updatedAt: new Date(),
+    _id: new ObjectId(entryToUpdate),
+  };
+
+  const result = await db.collection("users").findOneAndUpdate(
+    {
+      _id: new ObjectId(userId),
+      "entries._id": new ObjectId(entryToUpdate),
+    },
+    {
+      $set: {
+        "entries.$": updatedEntry,
+      },
+    },
+    {
+      returnDocument: "after",
+    }
+  );
+
+  return result || "not found";
 }
