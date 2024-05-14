@@ -8,3 +8,14 @@ export async function getEntries(): Promise<string> {
 
   return user?.entries || [];
 }
+
+export async function postEntry(newEntry: Object): Promise<string> {
+  const db = await connectToDatabase();
+  const user = await db.collection("user").findOneAndUpdate(
+    { user_email: "dominik.sakic@yahoo.com" },
+    { $push: { entries: newEntry } }, //change the user_email to a unique identifier
+    { returnDocument: "after" }
+  );
+
+  return user?.entries || [];
+}
