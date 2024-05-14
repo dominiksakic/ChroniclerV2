@@ -22,6 +22,7 @@ function connectToDatabase() {
             return db;
         const client = yield MongoClient.connect(uri);
         db = client.db(dbName);
+        yield db.collection("users").createIndex({ email: 1 }, { unique: true });
         return db;
     });
 }

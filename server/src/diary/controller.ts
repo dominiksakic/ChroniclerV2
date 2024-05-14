@@ -7,7 +7,8 @@ export async function getDiariesController(
   res: Response
 ): Promise<void> {
   try {
-    const entries = await getEntries();
+    const email: string = req.body.email;
+    const entries = await getEntries(email);
     res.status(200).json({ entries });
   } catch (error) {
     res.status(500).json({ error: "Error fetching entries" });
@@ -20,7 +21,7 @@ export async function postDiariesController(
 ): Promise<void> {
   try {
     //building blocks for the new Entry;
-    const { title, content } = req.body;
+    const { title, content, email } = req.body;
     const newObjectId = new ObjectId();
     const updatedAt: Date = new Date();
 
@@ -31,7 +32,7 @@ export async function postDiariesController(
       updatedAt: updatedAt,
     };
 
-    const entries = await postEntry(newEntry);
+    const entries = await postEntry(newEntry, email);
     res.status(200).json({ entries });
   } catch (error) {
     res.status(500).json({ error: "Error posting new entry" });
@@ -44,7 +45,8 @@ export async function deleteDiariesController(
 ): Promise<void> {
   try {
     const entryToDelete = req.params.id;
-    const deletedEntry = await deleteEntry(entryToDelete);
+    const email: string = req.body.email;
+    const deletedEntry = await deleteEntry(entryToDelete, email);
     res.status(200).json({ deletedEntry });
   } catch (error) {
     res.status(500).json({ error: "Error deleting entry" });

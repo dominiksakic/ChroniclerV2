@@ -24,7 +24,7 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 //USER
-app.post("/users", postUsersController)
+app.post("/users", postUsersController);
 
 //DIARY
 app.get("/diaries", getDiariesController);
