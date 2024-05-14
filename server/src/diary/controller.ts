@@ -1,6 +1,11 @@
 import { ObjectId } from "mongodb";
-import { getEntries, postEntry, deleteEntry } from "./model";
+import { getEntries, postEntry, deleteEntry, updateEntry } from "./model";
 import { Request, Response } from "express";
+
+interface EntryUpdateRequest {
+  title?: string;
+  content?: string;
+}
 
 export async function getDiariesController(
   req: Request,
@@ -50,5 +55,20 @@ export async function deleteDiariesController(
     res.status(200).json({ deletedEntry });
   } catch (error) {
     res.status(500).json({ error: "Error deleting entry" });
+  }
+}
+export async function patchDiariesController(
+  req: Request,
+  res: Response
+): Promise<void> {
+  try {
+    const entryToUpdate = req.params.entryId;
+    const userId = req.params.userId;
+    const updates: EntryUpdateRequest = req.body;
+
+    const updatedEntry = await updateEntry(userId, entryToUpdate, updates);
+    res.status(200).json({ updatedEntry });
+  } catch (error) {
+    res.status(500).json({ error: "Error updating entry" });
   }
 }

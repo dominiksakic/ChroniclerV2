@@ -1,6 +1,11 @@
 import { connectToDatabase } from "../db";
 import { ObjectId } from "mongodb";
 
+interface EntryUpdateRequest {
+  title?: string;
+  content?: string;
+}
+
 export async function getEntries(email: string): Promise<string> {
   const db = await connectToDatabase();
   const user = await db
@@ -40,4 +45,47 @@ export async function deleteEntry(
     );
 
   return deletedEntry || "not found";
+}
+export async function updateEntry(
+  userId: string,
+  entryToUpdate: string,
+  updates: EntryUpdateRequest
+): Promise<any> {
+  const db = await connectToDatabase();
+  const user = await db.collection("users").findOne(
+    {
+      _id: new ObjectId(userId),
+      "entries._id": new ObjectId(entryToUpdate),
+    },
+    {
+      projection: {
+        "entries.$": 1,
+      },
+    }
+  );
+
+  const updatedEntry = {
+    title: updates.title !== undefined ? updates.title : user.entries[0].title,
+    content:
+      updates.content !== undefined ? updates.content : user.entries[0].content,
+    updatedAt: new Date(),
+    _id: new ObjectId(entryToUpdate),
+  };
+
+  const result = await db.collection("users").findOneAndUpdate(
+    {
+      _id: new ObjectId(userId),
+      "entries._id": new ObjectId(entryToUpdate),
+    },
+    {
+      $set: {
+        "entries.$": updatedEntry,
+      },
+    },
+    {
+      returnDocument: "after",
+    }
+  );
+
+  return result || "not found";
 }

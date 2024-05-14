@@ -4,7 +4,7 @@ import {
   getDiariesController,
   postDiariesController,
   deleteDiariesController,
-  // patchDiariesController,
+  patchDiariesController,
 } from "./diary/controller";
 const cors = require("cors");
 const dotenv = require("dotenv");
@@ -30,7 +30,7 @@ app.post("/users", postUsersController);
 app.get("/diaries", getDiariesController);
 app.post("/diaries", postDiariesController);
 app.delete("/diaries/:id", deleteDiariesController);
-// app.patch("/diaries", patchDiariesController);
+app.patch("/diaries/:entryId/:userId", patchDiariesController);
 
 //to run TS without compiling it before: npx ts-node src/index.ts
 app.listen(port, () => {
