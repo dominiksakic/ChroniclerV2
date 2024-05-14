@@ -1,5 +1,5 @@
 import { ObjectId } from "mongodb";
-import { getEntries, postEntry } from "./model";
+import { getEntries, postEntry, deleteEntry } from "./model";
 import { Request, Response } from "express";
 
 export async function getDiariesController(
@@ -34,6 +34,19 @@ export async function postDiariesController(
     const entries = await postEntry(newEntry);
     res.status(200).json({ entries });
   } catch (error) {
-    res.status(500).json({ error: "Error fetching entries" });
+    res.status(500).json({ error: "Error posting new entry" });
+  }
+}
+
+export async function deleteDiariesController(
+  req: Request,
+  res: Response
+): Promise<void> {
+  try {
+    const entryToDelete = req.params.id;
+    const deletedEntry = await deleteEntry(entryToDelete);
+    res.status(200).json({ deletedEntry });
+  } catch (error) {
+    res.status(500).json({ error: "Error deleting entry" });
   }
 }

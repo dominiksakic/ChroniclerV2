@@ -1,9 +1,9 @@
 import express, { Express, Request, Response } from "express";
-import { getUsernameController } from "./user/controller";
+import { postUsersController } from "./user/controller";
 import {
   getDiariesController,
   postDiariesController,
-  // deleteDiariesController,
+  deleteDiariesController,
   // patchDiariesController,
 } from "./diary/controller";
 const cors = require("cors");
@@ -23,10 +23,13 @@ app.get("/", (req: Request, res: Response) => {
   res.send("Chronicler V2!");
 });
 
+//USER
+app.post("/users", postUsersController)
+
 //DIARY
 app.get("/diaries", getDiariesController);
 app.post("/diaries", postDiariesController);
-// app.delete("/diaries/:id", deleteDiariesController);
+app.delete("/diaries/:id", deleteDiariesController);
 // app.patch("/diaries", patchDiariesController);
 
 //to run TS without compiling it before: npx ts-node src/index.ts
