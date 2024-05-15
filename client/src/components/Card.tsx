@@ -19,18 +19,15 @@ const Card: React.FC<CardProps> = ({
   };
 
   const handleDeleteClick = async () => {
-    const response: Response = await fetch(
-      `${BASE_URL}/diaries/6642f5d10fe1de34eab81d12/${_id}`,
-      {
-        method: "DELETE",
-        headers: {
-          Origin: `${CLIENT_URL}`,
-          "Access-Control-Request-Headers": "Content-Type",
-          "Content-Type": "application/json",
-          "Access-Control-Request-Method": "DELETE",
-        },
-      }
-    );
+    await fetch(`${BASE_URL}/diaries/6642f5d10fe1de34eab81d12/${_id}`, {
+      method: "DELETE",
+      headers: {
+        Origin: `${CLIENT_URL}`,
+        "Access-Control-Request-Headers": "Content-Type",
+        "Content-Type": "application/json",
+        "Access-Control-Request-Method": "DELETE",
+      },
+    });
     handleGetEntries();
   };
 

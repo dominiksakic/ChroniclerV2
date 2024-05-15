@@ -33,11 +33,31 @@ function App() {
     setEntries(entries);
   };
 
+  const handleAIMode = async () => {
+    const response: Response = await fetch(
+      `${BASE_URL}/summaries/6642f5d10fe1de34eab81d12`,
+      {
+        method: "GET",
+        headers: {
+          Origin: `${CLIENT_URL}`,
+          "Access-Control-Request-Headers": "Content-Type",
+          "Content-Type": "application/json",
+          "Access-Control-Request-Method": "GET",
+        },
+      }
+    );
+    const data = await response.json();
+    setCurrTitle("Yoda Mode!");
+    setCurrContent(data.msg.content[0].text);
+  };
+
   return (
     <>
       <h1>Dominik's', Chronicle</h1>
       <button className="button-58">🪶 Make an Entry</button>
-      <button className="button-58">AI MODE</button>
+      <button className="button-58" onClick={handleAIMode}>
+        AI MODE
+      </button>
       <div className="main-container">
         <div className="card-container">
           {entries.map((entry, index) => {
