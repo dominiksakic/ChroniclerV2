@@ -1,23 +1,11 @@
-import { ObjectId, Timestamp } from "mongodb";
+import moment from "moment";
+import { DiaryEntry } from "../global.types";
 
-interface DiaryEntry {
-  _id: ObjectId;
-  title: string;
-  summary: string;
-  content: string;
-  creationDate: Timestamp;
-}
-
-interface CardProps {
-  entry: DiaryEntry;
-}
-
-const Card = ({ entry }: CardProps) => {
+const Card: React.FC<DiaryEntry> = ({ title, _id, content, updatedAt }) => {
   return (
-    <div className="diary-entry">
-      <p>{entry.title}</p>
-      <p>{entry.summary}</p>
-      <p>{entry.content}</p>
+    <div className="entry">
+      <h3>{title}</h3>
+      <p>{moment(updatedAt).fromNow()}</p>
     </div>
   );
 };

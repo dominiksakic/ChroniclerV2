@@ -12,8 +12,8 @@ export async function getDiariesController(
   res: Response
 ): Promise<void> {
   try {
-    const email: string = req.body.email;
-    const entries = await getEntries(email);
+    const id: string = req.params.id;
+    const entries = await getEntries(id);
     res.status(200).json({ entries });
   } catch (error) {
     res.status(500).json({ error: "Error fetching entries" });

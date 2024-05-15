@@ -15,7 +15,7 @@ const app: Express = express();
 const port = process.env.PORT || 3000;
 
 //MIDLEWARE
-app.use(cors());
+app.use(cors({ Origin: process.env.CLIENT_URL }));
 app.use(express.json());
 
 //TEST ENDPOINT
@@ -27,7 +27,7 @@ app.get("/", (req: Request, res: Response) => {
 app.post("/users", postUsersController);
 
 //DIARY
-app.get("/diaries", getDiariesController);
+app.get("/diaries/:id", getDiariesController);
 app.post("/diaries", postDiariesController);
 app.delete("/diaries/:id", deleteDiariesController);
 app.patch("/diaries/:entryId/:userId", patchDiariesController);

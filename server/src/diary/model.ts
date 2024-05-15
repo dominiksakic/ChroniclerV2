@@ -6,12 +6,11 @@ interface EntryUpdateRequest {
   content?: string;
 }
 
-export async function getEntries(email: string): Promise<string> {
+export async function getEntries(id: string): Promise<string> {
   const db = await connectToDatabase();
   const user = await db
     .collection("users")
-    .findOne({ email: email }, { entries: 1 });
-  console.log(user);
+    .findOne({ _id: new ObjectId(id) }, { entries: 1 });
   return user?.entries || [];
 }
 
