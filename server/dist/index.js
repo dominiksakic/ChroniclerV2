@@ -12,7 +12,7 @@ dotenv.config();
 const app = (0, express_1.default)();
 const port = process.env.PORT || 3000;
 //MIDLEWARE
-app.use(cors());
+app.use(cors({ Origin: process.env.CLIENT_URL }));
 app.use(express_1.default.json());
 //TEST ENDPOINT
 app.get("/", (req, res) => {
@@ -21,10 +21,11 @@ app.get("/", (req, res) => {
 //USER
 app.post("/users", controller_1.postUsersController);
 //DIARY
-app.get("/diaries", controller_2.getDiariesController);
+app.get("/diaries/:id", controller_2.getDiariesController);
+app.get("/summaries/:id", controller_2.getSummariesController);
+app.patch("/diaries/:entryId/:userId", controller_2.patchDiariesController);
 app.post("/diaries", controller_2.postDiariesController);
-app.delete("/diaries/:id", controller_2.deleteDiariesController);
-// app.patch("/diaries", patchDiariesController);
+app.delete("/diaries/:userId/:entryId", controller_2.deleteDiariesController);
 //to run TS without compiling it before: npx ts-node src/index.ts
 app.listen(port, () => {
     console.log(`[server]: Server is running at http://localhost:${port}`);
