@@ -6,12 +6,11 @@ interface EntryUpdateRequest {
   content?: string;
 }
 
-export async function getEntries(email: string): Promise<string> {
+export async function getEntries(id: string): Promise<string> {
   const db = await connectToDatabase();
   const user = await db
     .collection("users")
-    .findOne({ email: email }, { entries: 1 });
-  console.log(user);
+    .findOne({ _id: new ObjectId(id) }, { entries: 1 });
   return user?.entries || [];
 }
 
@@ -32,15 +31,15 @@ export async function postEntry(
 }
 
 export async function deleteEntry(
-  entryToDelete: string,
-  email: string
+  userId: string,
+  entryId: string
 ): Promise<string> {
   const db = await connectToDatabase();
   const deletedEntry = await db
     .collection("users")
     .findOneAndUpdate(
-      { email: email },
-      { $pull: { entries: { _id: new ObjectId(entryToDelete) } } },
+      { _id: new ObjectId(userId) },
+      { $pull: { entries: { _id: new ObjectId(entryId) } } },
       { returnDocument: "after" }
     );
 

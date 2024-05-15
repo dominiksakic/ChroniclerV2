@@ -1,0 +1,124 @@
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #fcf5c7;
+  color: #483d8b;
+  font-family: "Roboto", sans-serif;
+}
+
+h1 {
+  font-family: "UnifrakturCook", cursive;
+  padding-left: 24px;
+  box-shadow: 6px 6px 10px 0px rgba(0, 0, 0, 0.4);
+}
+
+.card-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.entry {
+  background-color: #f5f5dc;
+  min-width: 250px;
+  max-width: 300px;
+  height: 200px;
+  padding: 4px;
+  margin: 16px;
+  border: solid;
+  box-shadow: 6px 6px 10px 0px rgba(0, 0, 0, 0.4);
+  position: relative;
+}
+
+.entry:hover {
+  transform: scale(1.05);
+}
+
+.time {
+  position: absolute;
+  font-size: 15px;
+  top: 12px;
+  right: 20px;
+}
+
+.title-entry {
+  position: absolute;
+  top: 80px;
+  left: 20px;
+}
+
+.button-58 {
+  margin: 14px;
+  align-items: center;
+  background-color: #95606078;
+  border: 1px solid black;
+  box-sizing: border-box;
+  color: #483d8b;
+  cursor: pointer;
+  display: inline-flex;
+  fill: #000;
+  font-family: Inter, sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  height: 48px;
+  justify-content: center;
+  letter-spacing: -0.8px;
+  line-height: 24px;
+  min-width: 140px;
+  outline: 0;
+  padding: 0 17px;
+  text-align: center;
+  text-decoration: none;
+  transition: all 0.3s;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  box-shadow: 6px 6px 10px 0px rgba(0, 0, 0, 0.4);
+}
+
+.button-58:focus {
+  color: #171e29;
+  border: 1px solid black;
+}
+
+.button-58:hover {
+  background-color: #f5f5dc;
+  border: 1px solid black;
+
+  border-color: #f5f5dc;
+  fill: #f5f5dc;
+}
+
+.button-58:active {
+  background-color: #f5f5dc;
+  border-color: #f5f5dc;
+  border: 1px solid black;
+
+  fill: #f5f5dc;
+}
+
+@media (min-width: 768px) {
+  .button-58 {
+    min-width: 170px;
+  }
+}
+
+.write-space {
+  display: flex;
+  flex-direction: column;
+  min-width: 250px;
+  max-width: 300px;
+  margin-right: 12px;
+  margin-top: 14px;
+}
+
+.main-container {
+  display: flex;
+}
+
+.delete-button {
+  background-color: rgba(208, 33, 33, 0.674);
+  position: absolute;
+  top: 70px;
+  left: 150px;
+}
