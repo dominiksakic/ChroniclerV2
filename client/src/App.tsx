@@ -36,8 +36,8 @@ function App() {
     <>
       <h1>Dominik's', Chronicle</h1>
       <div className="button-container">
-        <button>🪶 Make an Entry</button>
-        <button>✍️Ask Chronicler to Summarize your week</button>
+        <button className="button-58">🪶 Make an Entry</button>
+        <button className="button-58">✍️AI MODE</button>
       </div>
       <div className="card-container">
         {entries.map((entry, index) => {
