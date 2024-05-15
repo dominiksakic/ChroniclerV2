@@ -1,9 +1,21 @@
 import moment from "moment";
-import { DiaryEntry } from "../global.types";
+import { CardProps } from "../global.types";
 
-const Card: React.FC<DiaryEntry> = ({ title, _id, content, updatedAt }) => {
+const Card: React.FC<CardProps> = ({
+  title,
+  _id,
+  content,
+  updatedAt,
+  setCurrTitle,
+  setCurrContent,
+}) => {
+  const handleEntryClick = () => {
+    setCurrTitle(title);
+    setCurrContent(content);
+  };
+
   return (
-    <div className="entry">
+    <div className="entry" onClick={handleEntryClick}>
       <h3>{title}</h3>
       <p>{moment(updatedAt).fromNow()}</p>
     </div>

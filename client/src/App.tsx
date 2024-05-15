@@ -8,13 +8,15 @@ const CLIENT_URL: string = import.meta.env.VITE_CLIENT_URL;
 
 function App() {
   const [entries, setEntries] = useState<DiaryEntry[]>([]);
+  const [currTitle, setCurrTitle] = useState<string>("");
+  const [currContent, setCurrContent] = useState<string>("");
 
   useEffect(() => {
     handleGetEntries();
   }, []);
 
   const handleGetEntries = async () => {
-    const response = await fetch(
+    const response: Response = await fetch(
       `${BASE_URL}/diaries/6642f5d10fe1de34eab81d12`,
       {
         method: "GET",
@@ -26,8 +28,7 @@ function App() {
         },
       }
     );
-    const data: any = await response.json();
-    const entries: DiaryEntry[] = [data];
+    const { entries }: { entries: DiaryEntry[] } = await response.json();
     setEntries(entries);
   };
 
@@ -35,8 +36,30 @@ function App() {
     <>
       <h1>'s', Chronicler</h1>
       {entries.map((entry, index) => {
-        return <Card key={index} {...entry} />;
+        return (
+          <Card
+            key={index}
+            {...entry}
+            setCurrTitle={setCurrTitle}
+            setCurrContent={setCurrContent}
+          />
+        );
       })}
+      <div className="write-space">
+        <input
+          type="text"
+          maxLength={32}
+          placeholder="Title"
+          value={currTitle}
+        />
+        <textarea
+          maxLength={1000}
+          placeholder="Click note to edit or click + to create new note"
+          rows={10}
+          cols={50}
+          value={currContent}
+        />
+      </div>
     </>
   );
 }

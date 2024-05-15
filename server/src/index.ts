@@ -28,9 +28,9 @@ app.post("/users", postUsersController);
 
 //DIARY
 app.get("/diaries/:id", getDiariesController);
+app.patch("/diaries/:entryId/:userId", patchDiariesController);
 app.post("/diaries", postDiariesController);
 app.delete("/diaries/:id", deleteDiariesController);
-app.patch("/diaries/:entryId/:userId", patchDiariesController);
 
 //to run TS without compiling it before: npx ts-node src/index.ts
 app.listen(port, () => {
