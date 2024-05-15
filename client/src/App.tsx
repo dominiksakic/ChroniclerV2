@@ -47,6 +47,7 @@ function App() {
                 {...entry}
                 setCurrTitle={setCurrTitle}
                 setCurrContent={setCurrContent}
+                handleGetEntries={handleGetEntries}
               />
             );
           })}

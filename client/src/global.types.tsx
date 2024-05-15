@@ -10,6 +10,7 @@ export interface DiaryEntry {
 export interface CardProps extends DiaryEntry {
   setCurrTitle: (title: string) => void;
   setCurrContent: (title: string) => void;
+  handleGetEntries: () => void;
 }
 
 export interface ContentProps {

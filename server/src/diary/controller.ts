@@ -55,9 +55,9 @@ export async function deleteDiariesController(
   res: Response
 ): Promise<void> {
   try {
-    const entryToDelete = req.params.id;
-    const email: string = req.body.email;
-    const deletedEntry = await deleteEntry(entryToDelete, email);
+    const userId = req.params.userId;
+    const entryId = req.params.entryId;
+    const deletedEntry = await deleteEntry(userId, entryId);
     res.status(200).json({ deletedEntry });
   } catch (error) {
     res.status(500).json({ error: "Error deleting entry" });

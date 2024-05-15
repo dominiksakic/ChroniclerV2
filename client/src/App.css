@@ -109,8 +109,16 @@ h1 {
   min-width: 250px;
   max-width: 300px;
   margin-right: 12px;
+  margin-top: 14px;
 }
 
 .main-container {
   display: flex;
+}
+
+.delete-button {
+  background-color: rgba(208, 33, 33, 0.674);
+  position: absolute;
+  top: 70px;
+  left: 150px;
 }

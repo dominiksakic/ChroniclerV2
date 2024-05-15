@@ -32,7 +32,7 @@ app.get("/diaries/:id", getDiariesController);
 app.get("/summaries/:id", getSummariesController);
 app.patch("/diaries/:entryId/:userId", patchDiariesController);
 app.post("/diaries", postDiariesController);
-app.delete("/diaries/:id", deleteDiariesController);
+app.delete("/diaries/:userId/:entryId", deleteDiariesController);
 
 //to run TS without compiling it before: npx ts-node src/index.ts
 app.listen(port, () => {

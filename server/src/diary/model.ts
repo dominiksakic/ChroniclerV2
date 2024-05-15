@@ -31,15 +31,15 @@ export async function postEntry(
 }
 
 export async function deleteEntry(
-  entryToDelete: string,
-  email: string
+  userId: string,
+  entryId: string
 ): Promise<string> {
   const db = await connectToDatabase();
   const deletedEntry = await db
     .collection("users")
     .findOneAndUpdate(
-      { email: email },
-      { $pull: { entries: { _id: new ObjectId(entryToDelete) } } },
+      { _id: new ObjectId(userId) },
+      { $pull: { entries: { _id: new ObjectId(entryId) } } },
       { returnDocument: "after" }
     );
 
