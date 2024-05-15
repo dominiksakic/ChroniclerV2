@@ -1,0 +1,45 @@
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #fcf5c7;
+  color: #483d8b;
+  font-family: "Roboto", sans-serif;
+}
+
+h1 {
+  font-family: "UnifrakturCook", cursive;
+}
+
+.card-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.entry {
+  background-color: #f5f5dc;
+  min-width: 250px;
+  max-width: 300px;
+  height: 200px;
+  padding: 4px;
+  margin: 16px;
+  border: solid;
+  box-shadow: 6px 6px 10px 0px rgba(0, 0, 0, 0.4);
+  position: relative;
+}
+
+.entry:hover {
+  transform: scale(1.05);
+}
+
+.time {
+  position: absolute;
+  font-size: 15px;
+  top: 12px;
+  right: 20px;
+}
+
+.title-entry {
+  position: absolute;
+  top: 60px;
+}

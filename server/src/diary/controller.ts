@@ -1,6 +1,7 @@
 import { ObjectId } from "mongodb";
 import { getEntries, postEntry, deleteEntry, updateEntry } from "./model";
 import { Request, Response } from "express";
+import Anthropic from "@anthropic-ai/sdk";
 
 interface EntryUpdateRequest {
   title?: string;
@@ -71,5 +72,39 @@ export async function patchDiariesController(
     res.status(200).json({ updatedEntry });
   } catch (error) {
     res.status(500).json({ error: "Error updating entry" });
+  }
+}
+
+export async function getSummariesController(
+  req: Request,
+  res: Response
+): Promise<void> {
+  try {
+    const anthropic = new Anthropic({
+      apiKey: "my_api_key", // defaults to process.env["ANTHROPIC_API_KEY"]
+    });
+
+    const msg = await anthropic.messages.create({
+      model: "claude-3-opus-20240229",
+      max_tokens: 1000,
+      temperature: 0,
+      system:
+        "Please Summarize the Diary entries in one or two sentences. \nOrganize the summaries by Date.\nPlease start your response with the dates. Dont have any preface saying/writting something.",
+      messages: [
+        {
+          role: "user",
+          content: [
+            {
+              type: "text",
+              text: "Monday: I learned about chat gpt and how cool it is. I laughed so much \n\nTuesday: I learned about endpoints and the magic. \n\nWednesday: I learned about what love and live is about.",
+            },
+          ],
+        },
+      ],
+    });
+    console.log(msg);
+    res.status(200).json({ Summaries });
+  } catch (error) {
+    res.status(500).json({ error: "Error fetching Summaries" });
   }
 }

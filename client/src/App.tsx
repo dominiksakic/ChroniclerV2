@@ -1,4 +1,4 @@
-import { useEffect, useState, createContext } from "react";
+import { useEffect, useState } from "react";
 import Card from "./components/Card";
 import { DiaryEntry } from "./global.types";
 import "./App.css";
@@ -34,31 +34,22 @@ function App() {
 
   return (
     <>
-      <h1>'s', Chronicler</h1>
-      {entries.map((entry, index) => {
-        return (
-          <Card
-            key={index}
-            {...entry}
-            setCurrTitle={setCurrTitle}
-            setCurrContent={setCurrContent}
-          />
-        );
-      })}
-      <div className="write-space">
-        <input
-          type="text"
-          maxLength={32}
-          placeholder="Title"
-          value={currTitle}
-        />
-        <textarea
-          maxLength={1000}
-          placeholder="Click note to edit or click + to create new note"
-          rows={10}
-          cols={50}
-          value={currContent}
-        />
+      <h1>Dominik's', Chronicle</h1>
+      <div className="button-container">
+        <button>🪶 Make an Entry</button>
+        <button>✍️Ask Chronicler to Summarize your week</button>
+      </div>
+      <div className="card-container">
+        {entries.map((entry, index) => {
+          return (
+            <Card
+              key={index}
+              {...entry}
+              setCurrTitle={setCurrTitle}
+              setCurrContent={setCurrContent}
+            />
+          );
+        })}
       </div>
     </>
   );

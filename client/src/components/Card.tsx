@@ -16,8 +16,11 @@ const Card: React.FC<CardProps> = ({
 
   return (
     <div className="entry" onClick={handleEntryClick}>
-      <h3>{title}</h3>
-      <p>{moment(updatedAt).fromNow()}</p>
+      <p className="time">{moment(updatedAt).calendar()}</p>
+      <p className="title-entry">
+        {title}, <br />{" "}
+        <span style={{ fontSize: "15px" }}>Dear Diary Today...</span>
+      </p>
     </div>
   );
 };
