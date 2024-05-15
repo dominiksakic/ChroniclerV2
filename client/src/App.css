@@ -9,6 +9,7 @@ body {
 h1 {
   font-family: "UnifrakturCook", cursive;
   padding-left: 24px;
+  box-shadow: 6px 6px 10px 0px rgba(0, 0, 0, 0.4);
 }
 
 .card-container {
@@ -42,13 +43,14 @@ h1 {
 
 .title-entry {
   position: absolute;
-  top: 60px;
+  top: 80px;
+  left: 20px;
 }
 
 .button-58 {
   margin: 14px;
   align-items: center;
-  background-color: #f5f5dc;
+  background-color: #95606078;
   border: 1px solid black;
   box-sizing: border-box;
   color: #483d8b;
@@ -76,10 +78,13 @@ h1 {
 
 .button-58:focus {
   color: #171e29;
+  border: 1px solid black;
 }
 
 .button-58:hover {
   background-color: #f5f5dc;
+  border: 1px solid black;
+
   border-color: #f5f5dc;
   fill: #f5f5dc;
 }
@@ -87,6 +92,8 @@ h1 {
 .button-58:active {
   background-color: #f5f5dc;
   border-color: #f5f5dc;
+  border: 1px solid black;
+
   fill: #f5f5dc;
 }
 
@@ -94,4 +101,16 @@ h1 {
   .button-58 {
     min-width: 170px;
   }
+}
+
+.write-space {
+  display: flex;
+  flex-direction: column;
+  min-width: 250px;
+  max-width: 300px;
+  margin-right: 12px;
+}
+
+.main-container {
+  display: flex;
 }

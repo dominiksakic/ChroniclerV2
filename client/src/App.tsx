@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Card from "./components/Card";
 import { DiaryEntry } from "./global.types";
 import "./App.css";
+import Content from "./components/Content";
 
 const BASE_URL: string = import.meta.env.VITE_BASE_URL;
 const CLIENT_URL: string = import.meta.env.VITE_CLIENT_URL;
@@ -35,21 +36,22 @@ function App() {
   return (
     <>
       <h1>Dominik's', Chronicle</h1>
-      <div className="button-container">
-        <button className="button-58">🪶 Make an Entry</button>
-        <button className="button-58">✍️AI MODE</button>
-      </div>
-      <div className="card-container">
-        {entries.map((entry, index) => {
-          return (
-            <Card
-              key={index}
-              {...entry}
-              setCurrTitle={setCurrTitle}
-              setCurrContent={setCurrContent}
-            />
-          );
-        })}
+      <button className="button-58">🪶 Make an Entry</button>
+      <button className="button-58">AI MODE</button>
+      <div className="main-container">
+        <div className="card-container">
+          {entries.map((entry, index) => {
+            return (
+              <Card
+                key={index}
+                {...entry}
+                setCurrTitle={setCurrTitle}
+                setCurrContent={setCurrContent}
+              />
+            );
+          })}
+        </div>
+        <Content currTitle={currTitle} currContent={currContent} />
       </div>
     </>
   );
