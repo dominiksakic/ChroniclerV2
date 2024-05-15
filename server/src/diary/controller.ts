@@ -2,6 +2,11 @@ import { ObjectId } from "mongodb";
 import { getEntries, postEntry, deleteEntry, updateEntry } from "./model";
 import { Request, Response } from "express";
 import Anthropic from "@anthropic-ai/sdk";
+import { format, isWithinInterval, subWeeks } from "date-fns";
+
+const dotenv = require("dotenv");
+
+dotenv.config();
 
 interface EntryUpdateRequest {
   title?: string;
@@ -80,8 +85,23 @@ export async function getSummariesController(
   res: Response
 ): Promise<void> {
   try {
+    const id: string = req.params.id;
+    const data: any = await getEntries(id);
+    let summary = "";
+    const lastWeek = subWeeks(new Date(), 1);
+
+    data.map((entry: any) => {
+      const { content, title, updatedAt } = entry;
+      const entryDate = new Date(updatedAt);
+
+      if (isWithinInterval(entryDate, { start: lastWeek, end: new Date() })) {
+        summary += title;
+        summary += format(entryDate, "yyyy-MM-dd");
+        summary += content;
+      }
+    });
     const anthropic = new Anthropic({
-      apiKey: "my_api_key", // defaults to process.env["ANTHROPIC_API_KEY"]
+      apiKey: process.env.CLAUDE,
     });
 
     const msg = await anthropic.messages.create({
@@ -89,21 +109,21 @@ export async function getSummariesController(
       max_tokens: 1000,
       temperature: 0,
       system:
-        "Please Summarize the Diary entries in one or two sentences. \nOrganize the summaries by Date.\nPlease start your response with the dates. Dont have any preface saying/writting something.",
+        "Please Summarize the Diary entries in Yoda English. \nOrganize the summaries by Weekdays and onlu displaying the Weekdays.\nPlease start your response with the dates. Dont have any preface saying/writting something.",
       messages: [
         {
           role: "user",
           content: [
             {
               type: "text",
-              text: "Monday: I learned about chat gpt and how cool it is. I laughed so much \n\nTuesday: I learned about endpoints and the magic. \n\nWednesday: I learned about what love and live is about.",
+              text: summary,
             },
           ],
         },
       ],
     });
-    console.log(msg);
-    res.status(200).json({ Summaries });
+
+    res.status(200).json({ msg });
   } catch (error) {
     res.status(500).json({ error: "Error fetching Summaries" });
   }
