@@ -11,6 +11,8 @@ function App() {
   const [entries, setEntries] = useState<DiaryEntry[]>([]);
   const [currTitle, setCurrTitle] = useState<string>("");
   const [currContent, setCurrContent] = useState<string>("");
+  const [visable, setVisable] = useState<Boolean>(false);
+  const [currCard, setCurrCard] = useState<Number>(-1);
 
   useEffect(() => {
     handleGetEntries();
@@ -51,10 +53,59 @@ function App() {
     setCurrContent(data.msg.content[0].text);
   };
 
+  const handleVisable = async () => {
+    setCurrTitle("Whats on your mind?");
+    setCurrContent("Write here ...");
+    setVisable(true);
+    setCurrCard(-1);
+  };
+
+  const handleSaveEdit = async () => {
+    const update = currCard;
+    const newTitle = currTitle;
+    const newContent = currContent;
+
+    if (typeof update === "number") {
+      await fetch(`${BASE_URL}/diaries/`, {
+        method: "POST",
+        headers: {
+          Origin: `${CLIENT_URL}`,
+          "Access-Control-Request-Headers": "Content-Type",
+          "Content-Type": "application/json",
+          "Access-Control-Request-Method": "POST",
+        },
+        body: JSON.stringify({
+          email: "dominik.shintaku@yahoo.com",
+          title: newTitle,
+          content: newContent,
+        }),
+      });
+    } else {
+      await fetch(`${BASE_URL}/diaries/${update}/6642f5d10fe1de34eab81d12`, {
+        method: "PATCH",
+        headers: {
+          Origin: `${CLIENT_URL}`,
+          "Access-Control-Request-Headers": "Content-Type",
+          "Content-Type": "application/json",
+          "Access-Control-Request-Method": "PATCH",
+        },
+        body: JSON.stringify({
+          update: {
+            title: newTitle,
+            content: newContent,
+          },
+        }),
+      });
+    }
+    handleGetEntries();
+  };
+
   return (
     <>
       <h1>Dominik's', Chronicle</h1>
-      <button className="button-58">🪶 Make an Entry</button>
+      <button className="button-58" onClick={handleVisable}>
+        🪶 Make an Entry
+      </button>
       <button className="button-58" onClick={handleAIMode}>
         AI MODE
       </button>
@@ -68,11 +119,28 @@ function App() {
                 setCurrTitle={setCurrTitle}
                 setCurrContent={setCurrContent}
                 handleGetEntries={handleGetEntries}
+                setVisable={setVisable}
+                visable={visable}
+                setCurrCard={setCurrCard}
               />
             );
           })}
         </div>
-        <Content currTitle={currTitle} currContent={currContent} />
+        {visable ? (
+          <div>
+            <Content
+              currTitle={currTitle}
+              currContent={currContent}
+              setCurrTitle={setCurrTitle}
+              setCurrContent={setCurrContent}
+            />
+            <button className="button-58" onClick={handleSaveEdit}>
+              Save/Edit
+            </button>
+          </div>
+        ) : (
+          <div className="invisible"></div>
+        )}
       </div>
     </>
   );

@@ -71,6 +71,7 @@ export async function updateEntry(
     _id: new ObjectId(entryToUpdate),
   };
 
+  console.log(updateEntry);
   const result = await db.collection("users").findOneAndUpdate(
     {
       _id: new ObjectId(userId),
