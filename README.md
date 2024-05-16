@@ -29,7 +29,7 @@ This project is a web application for making personal diary entries. The diary e
   - DELETE ENTRY
   - EDIT ENTRIES (COMMING SOON)
   - LOGOUT (COMMING OUT)
-  - POST NEW ENTRY (COMMING SOON)
+  - POST NEW ENTRY 
   - User Verification/Login (COMMING SOON)
   - Create Account (COMMING SOON)
 
