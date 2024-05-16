@@ -12,10 +12,16 @@ const Card: React.FC<CardProps> = ({
   setCurrTitle,
   setCurrContent,
   handleGetEntries,
+  setVisable,
+  visable,
 }) => {
   const handleEntryClick = () => {
     setCurrTitle(title);
     setCurrContent(content);
+    setVisable(true);
+    if (visable) {
+      setVisable(false);
+    }
   };
 
   const handleDeleteClick = async () => {

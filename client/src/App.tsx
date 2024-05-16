@@ -11,6 +11,7 @@ function App() {
   const [entries, setEntries] = useState<DiaryEntry[]>([]);
   const [currTitle, setCurrTitle] = useState<string>("");
   const [currContent, setCurrContent] = useState<string>("");
+  const [visable, setVisable] = useState<Boolean>(false);
 
   useEffect(() => {
     handleGetEntries();
@@ -51,10 +52,18 @@ function App() {
     setCurrContent(data.msg.content[0].text);
   };
 
+  const handleVisable = async () => {
+    setCurrTitle("Whats on your mind?");
+    setCurrContent("Write here ...");
+    setVisable(true);
+  };
+
   return (
     <>
       <h1>Dominik's', Chronicle</h1>
-      <button className="button-58">🪶 Make an Entry</button>
+      <button className="button-58" onClick={handleVisable}>
+        🪶 Make an Entry
+      </button>
       <button className="button-58" onClick={handleAIMode}>
         AI MODE
       </button>
@@ -68,11 +77,19 @@ function App() {
                 setCurrTitle={setCurrTitle}
                 setCurrContent={setCurrContent}
                 handleGetEntries={handleGetEntries}
+                setVisable={setVisable}
+                visable={visable}
               />
             );
           })}
         </div>
-        <Content currTitle={currTitle} currContent={currContent} />
+        {visable ? (
+          <div>
+            <Content currTitle={currTitle} currContent={currContent} />
+          </div>
+        ) : (
+          <div className="invisible"></div>
+        )}
       </div>
     </>
   );
