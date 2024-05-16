@@ -57,6 +57,47 @@ function App() {
     setCurrTitle("Whats on your mind?");
     setCurrContent("Write here ...");
     setVisable(true);
+    setCurrCard(-1);
+  };
+
+  const handleSaveEdit = async () => {
+    const update = currCard;
+    const newTitle = currTitle;
+    const newContent = currContent;
+
+    if (typeof update === "number") {
+      await fetch(`${BASE_URL}/diaries/`, {
+        method: "POST",
+        headers: {
+          Origin: `${CLIENT_URL}`,
+          "Access-Control-Request-Headers": "Content-Type",
+          "Content-Type": "application/json",
+          "Access-Control-Request-Method": "POST",
+        },
+        body: JSON.stringify({
+          email: "dominik.shintaku@yahoo.com",
+          title: newTitle,
+          content: newContent,
+        }),
+      });
+    } else {
+      await fetch(`${BASE_URL}/diaries/${update}/6642f5d10fe1de34eab81d12`, {
+        method: "PATCH",
+        headers: {
+          Origin: `${CLIENT_URL}`,
+          "Access-Control-Request-Headers": "Content-Type",
+          "Content-Type": "application/json",
+          "Access-Control-Request-Method": "PATCH",
+        },
+        body: JSON.stringify({
+          update: {
+            title: newTitle,
+            content: newContent,
+          },
+        }),
+      });
+    }
+    handleGetEntries();
   };
 
   return (
@@ -87,8 +128,15 @@ function App() {
         </div>
         {visable ? (
           <div>
-            <Content currTitle={currTitle} currContent={currContent}  setCurrTitle={setCurrTitle}
-                setCurrContent={setCurrContent} />
+            <Content
+              currTitle={currTitle}
+              currContent={currContent}
+              setCurrTitle={setCurrTitle}
+              setCurrContent={setCurrContent}
+            />
+            <button className="button-58" onClick={handleSaveEdit}>
+              Save/Edit
+            </button>
           </div>
         ) : (
           <div className="invisible"></div>
