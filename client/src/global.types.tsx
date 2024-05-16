@@ -13,9 +13,12 @@ export interface CardProps extends DiaryEntry {
   handleGetEntries: () => void;
   setVisable: any;
   visable: Boolean;
+  setCurrCard: any;
 }
 
 export interface ContentProps {
   currTitle: string;
   currContent: string;
+  setCurrTitle: (title: string) => any;
+  setCurrContent: (title: string) => any;
 }

@@ -12,6 +12,7 @@ function App() {
   const [currTitle, setCurrTitle] = useState<string>("");
   const [currContent, setCurrContent] = useState<string>("");
   const [visable, setVisable] = useState<Boolean>(false);
+  const [currCard, setCurrCard] = useState<Number>(-1);
 
   useEffect(() => {
     handleGetEntries();
@@ -79,13 +80,15 @@ function App() {
                 handleGetEntries={handleGetEntries}
                 setVisable={setVisable}
                 visable={visable}
+                setCurrCard={setCurrCard}
               />
             );
           })}
         </div>
         {visable ? (
           <div>
-            <Content currTitle={currTitle} currContent={currContent} />
+            <Content currTitle={currTitle} currContent={currContent}  setCurrTitle={setCurrTitle}
+                setCurrContent={setCurrContent} />
           </div>
         ) : (
           <div className="invisible"></div>
